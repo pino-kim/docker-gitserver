@@ -9,6 +9,11 @@ RUN     apt-get update \
             openssh-server \
             libdata-dumper-simple-perl 
 
+# To avoid annoying "perl: warning: Setting locale failed." errors,
+# do not allow the client to pass custom locals, see:
+# http://stackoverflow.com/a/2510548/15677
+RUN sed -i 's/^AcceptEnv LANG LC_\*$//g' /etc/ssh/sshd_config
+
 #RUN /usr/sbin/useradd --comment "Git" --shell /bin/bash git
 RUN adduser --disabled-password --gecos ""  git
 RUN su - git
