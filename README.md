@@ -1,2 +1,2 @@
 # gitserver
-dockerfile
+docker + gitolite + gitweb
