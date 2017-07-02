@@ -11,9 +11,16 @@ __create_hostkeys() {
     ssh-keygen -t ed25519 -f /etc/ssh/ssh_host_ed25519_key -N ''
 }
 
+# start gitweb 
+__start_gitweb() {
+	service fcgiwrap restart
+	service nginx start
+}
+
 # Call all functions
 __create_rundir
 __create_hostkeys
+__start_gitweb
 
 exec "$@"
 

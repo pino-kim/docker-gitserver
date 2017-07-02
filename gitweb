@@ -1,0 +1,37 @@
+server {
+
+# Git repos are browsable at http://example.com:4321/
+
+    listen 80;
+
+    server_name localhost;
+
+     
+
+    location /index.cgi {
+
+        root /usr/share/gitweb/;
+
+        include fastcgi_params;
+
+        gzip off;
+
+        fastcgi_param SCRIPT_NAME $uri;
+
+        fastcgi_param GITWEB_CONFIG /etc/gitweb.conf;
+
+        fastcgi_pass unix:/var/run/fcgiwrap.socket;
+
+    }
+
+     
+
+    location / {
+
+        root /usr/share/gitweb/;
+
+        index index.cgi;
+
+    }
+
+}
