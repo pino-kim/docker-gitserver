@@ -44,6 +44,7 @@ RUN     echo "UseDNS no" >> /etc/ssh/sshd_config
 
 VOLUME ["/home/git/repositories"]
  # config gitweb config
+ADD gitweb.conf /etc/
 ADD gitweb /etc/nginx/sites-available/gitweb
 RUN ln -s /etc/nginx/sites-available/gitweb /etc/nginx/sites-enabled/gitweb
 RUN rm -rf /etc/nginx/sites-enabled/default
