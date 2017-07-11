@@ -9,6 +9,7 @@ REPO_PATH=/home/$YOURNAME/$REPONAME
 if [ ! -d $REPO_PATH ]; then 
 	echo "Make [$REPONAME] directory at $REPO_PATH"
 	mkdir -p $REPO_PATH
+	#chown $YOURNAME:$YOURNAME $REPO_PATH
 else
 	if [ "$(ls -A $REPO_PATH)" ]; then 
 		echo "Your [$REPONAME] directory isn't empty."
@@ -16,11 +17,21 @@ else
 		exit 1
 	fi
 fi
+
+# run docker run
+sudo docker run \
+	--name repo_test \
+	--restart always \
+	-d \
+	-p 8800:80 \
+	-p 2200:22 \
+	-v /home/pino/repositories:/home/git/repositories \
+	test
 	
 # check ssh-key exist
-if [ -f $HOME/.ssh/id_rsa.pub ]; then
+if [ -f /home/$YOURNAME/.ssh/id_rsa.pub ]; then
 	echo "id_rsa.pub exist"
-	sudo cp $HOME/.ssh/id_rsa.pub /tmp/${YOURNAME}.pub
+	sudo cp /home/$YOURNAME/.ssh/id_rsa.pub /tmp/${YOURNAME}.pub
 else
 	echo "id_rsa.pub not exist"
         echo "type 'ssh-keygen' on the shell to generate ssh public key."
