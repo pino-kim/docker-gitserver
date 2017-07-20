@@ -41,9 +41,9 @@ EXPOSE  22 80 443
 # patch sshd_config for fast login
 RUN     echo "UseDNS no" >> /etc/ssh/sshd_config
 
-
 VOLUME ["/home/git/repositories"]
- # config gitweb config
+
+# config gitweb config
 ADD  ./config_file/gitweb.conf /etc/
 ADD  ./config_file/gitweb /etc/nginx/sites-available/gitweb
 RUN  ln -s /etc/nginx/sites-available/gitweb /etc/nginx/sites-enabled/gitweb
@@ -51,9 +51,6 @@ RUN  rm -rf /etc/nginx/sites-enabled/default
 
 ENTRYPOINT ["/entrypoint.sh"]
 CMD ["/usr/sbin/sshd", "-D"]
-
-# patch 502 errors
-# connect() to unix:/var/run/fcgiwrap.socket failed (13: Permission denied) while connecting
 
 COPY ./script/entrypoint.sh /entrypoint.sh
 COPY ./script/setup.sh /setup.sh

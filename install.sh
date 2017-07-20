@@ -42,5 +42,12 @@ fi
 # Initializing the gitotie in the docker container
 sudo docker cp /tmp/${YOURNAME}.pub repo_test:/tmp/${YOURNAME}.pub
 sudo docker exec -u git repo_test /setup.sh /tmp/${YOURNAME}.pub
+sudo docker exec -u git repo_test sed -i 's/0077/0027/g' /home/git/.gitolite.rc
+sudo docker exec repo_test usermod -a -G git www-data
+
+# add test git for git
+
+sudo docker exec repo_test ln -s /home/git/repositories/testing.git /var/lib/git/testing.git
+sudo docker restart repo_test
 
 
